@@ -50,9 +50,15 @@ Qns) What is Sub and Sup Tag?
 
 Qns) What is <!Doctype html> in Html5
 
+   - The <!DOCTYPE html> declaration is a special instruction placed at the very beginning of an HTML document that tells the web browser to interpret the page using modern web standards (HTML5).
+   
    - <!DOCTYPE html> declaration is used at the beginning of the document to indicate that the page is an HTML5 document. The rest of the HTML code follows, using HTML5 semantic elements such as <header>, <nav>, <article>, and <footer> to structure the content.
 
 Qns) Tell me about semantic Tags in HTML?
+
+   - Semantic tags in HTML are elements that clearly describe their purpose to both the browser and the developer (e.g., <header>, <article>, <footer>). 
+
+   - Unlike non-semantic tags, they provide meaning to the content, improving accessibility and search engine optimization (SEO). Non-semantic tags (e.g., <div>, <span>) are just generic containers. 
 
    - Semantic HTML tags are tags that define the meaning of the content they contain. For example, tags like <header>, <article>, and <footer> are semantic HTML tags. They clearly indicate the role of the content they contain. On the other hand, tags like <div> and <span> are typical examples of non-semantic HTML elements. Semantic tags improve accessibility, search engine optimization (SEO), and overall code readability.
 
