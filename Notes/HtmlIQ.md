@@ -108,6 +108,7 @@ Qns) Do you know about the Meta Tags?
    - Meta tags are HTML elements that provide metadata about a web page. This metadata is not displayed on the web page itself but is used by browsers, search engines, and other web services to gather information about the page. Meta tags are typically placed within the <head> section of an HTML document.
 
     <meta charset="UTF-8">: Specifies the character encoding for the document. UTF-8 is the most common encoding and supports a wide range of characters.
+    UTF-8 (Unicode Transformation Format-8-bit) is the dominant variable-width character encoding standard for the World Wide Web, used by 99% of websites to represent any Unicode character using one to four 8-bit bytes. It is backward-compatible with ASCII, allowing it to efficiently encode characters from all languages and emojis. 
 
     <meta name="description" content="Brief description of the page">: Provides a short description of the web page's content. This description is often used by search engines when displaying search results.
 
@@ -170,6 +171,14 @@ Qns) What is attribute in html?
 
 Qns) What is block level element and inline element in
 html?
+
+   Block-Level Elements
+   Definition: Always start on a new line and stretch to the full width of their parent container.
+   Examples: <div>, <h1>-<h6>, <p>, <form>, <header>, <footer>, <section>, <ul>, <li>.
+
+   Inline Elements
+   Definition: Do not start on a new line and only take up as much width as necessary, fitting within surrounding text or elements.
+   Examples: <span>, <a>, <img>, <strong>, <em>, <b>, <i>, <button>.
 
    A block-level element always starts on a new line and takes up the full width available. An inline element does not start on a new line and it only takes up as much width as necessary. The <div> element is a block-level and is often used as a container for other HTML elements.
 
