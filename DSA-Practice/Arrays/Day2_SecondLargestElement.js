@@ -36,3 +36,16 @@ for(let i = 0; i < arr.length; i++){
 }
 
 console.log("Third Largest element is",thirdLargest);
+
+
+//Problem 2.2: Find using Javascript inbuilt function
+
+function secondLargestArr(num){
+   if(arr.length > 2) {
+     arr.sort((a,b)=> b - a)
+
+     return arr[1]
+   }
+}
+
+console.log('second largest element is new method', secondLargestArr(arr))
