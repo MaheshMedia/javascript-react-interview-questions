@@ -20,6 +20,7 @@
 <!-- 🔷 4. ARCHITECTURE -->
 # ❓ Explain multi-tenant architecture?
 # ❓ How did you implement RBAC?
+# ❓ How did you implement RBAC?  using express Js
 
 
 <!-- 🔷 5. DATABASE (MongoDB + PostgreSQL) -->
@@ -67,17 +68,18 @@ It handles student admissions, attendance, fee management, staff payroll, and pa
 
 The tech stack includes React.js frontend, and Node.js with Express.JS for backend, with MongoDB as the database. We use GCP and Firebase for deployment and services.
 
-My contribution was full-stack:
+My contribution in this Project I have worked:
 - On backend, I developed REST APIs, implemented JWT authentication and role-based access control.
 - I also worked on payment integration using Razorpay and GrayQuest, including webhook verification.
 - On frontend, I built reusable components and improved performance using lazy loading.
-
-One key contribution was optimizing MongoDB queries using indexing, which improved performance by around 35%.
+- On Database we used MongoDB where i am designing Schema & queries using indexing , Aggregation ( It uses a pipeline approach, where documents pass through sequential stages—such as $match (filtering), $group (grouping), and $sort (ordering)—to transform data into aggregated insights), which improved performance.
 
 
 <!-- 🌍 PreschoolsNearMe (SECOND PROJECT) -->
 
 Another project I worked on is PreschoolsNearMe, which is a platform where parents can search for preschools nearby.
+
+Parents can view school details and send enquiries, and schools get those enquiries or leads and dashboard to manage.
 
 It’s built using Next.js with server-side rendering to improve SEO and Google ranking.
 
@@ -85,20 +87,18 @@ Also we have used the NestJS for backend which provides a structured architectur
 
 I implemented location-based search using MongoDB geospatial queries and Google Maps API.
 
-Parents can view school details and send enquiries, and schools get a dashboard to manage those leads.
-
 This improved parent-school discovery by around 40%.
 
 
 # ❓ What is your role in the project?
 
-I worked as a full-stack developer with end-to-end ownership. I wasn't just implementing tickets — I was involved from requirement discussions, designing the database schema, building the APIs, developing the UI, and deploying to GCP. For example, the entire payment gateway integration — from Razorpay order creation to webhook verification to PDF receipt generation — was designed and built by me.
+I worked as a full-stack developer with end-to-end ownership. I was not just implementing tickets — I was involved from requirement discussions, designing the database schema, building the APIs, developing the UI, and deploying to GCP. For example, the entire payment gateway integration — from Razorpay order creation to webhook verification to PDF receipt generation — was designed and built by me.
 
 # ❓ What challenges did you face?
 
-One challenge was handling multi-tenant data securely. We solved it by adding tenantId in every collection and filtering all queries based on it.
+One challenge was handling multi-tenant data securely. We solved it by adding schoolId in every collection and filtering all queries based on it.
 
-One technical challenge was multi-tenant data isolation — solved using tenantId filtering across all collections and in the JWT itself.
+One technical challenge was multi-tenant data isolation — solved using schoolId filtering across all collections and in the JWT itself.
 Another was the payment webhook reliability. Razorpay sends webhooks on payment success, but we had to handle cases where the webhook arrives delayed or duplicates arrive. We solved this with idempotency — checking if the invoice was already marked 'Paid' before processing the webhook again
 
 
@@ -108,15 +108,12 @@ Another was the payment webhook reliability. Razorpay sends webhooks on payment 
 
 # "We use async/await with a service layer, handle errors properly, and attach JWT in headers for secure API calls."
 
-On the frontend, we handle server calls using async/await with API service layers.
-
-We create a separate API service file where all HTTP calls are defined using axios or fetch. This keeps the code clean and reusable.
+We create a separate API service file where all HTTP calls are defined using axios or fetch.
 
 We also handle:
 - Error handling using try-catch
 - Loading states for better UX
 - Token-based authentication by attaching JWT in headers
-- Retry or fallback for failed calls if needed
 
 On the backend, APIs are designed in a modular way using NestJS controllers and services, so each request flows through validation, guards, and business logic properly.
 
@@ -151,13 +148,13 @@ We return proper status codes and meaningful error messages.
 
 # ❓ How did you handle authentication?
 
-We used JWT-based authentication. On login, NestJS generates a token containing the userId, role, and tenantId. Every request carries this token, and NestJS Guards verify it before the request reaches any controller. The tenantId inside the token is critical — every database query uses it as a filter, so one school's data is never accessible to another school, even if someone tried to guess an ID
+We used JWT-based authentication. On login, NestJS generates a token containing the userId, role, and schoolId. Every request carries this token, and NestJS Guards verify it before the request reaches any controller. The schoolId inside the token is critical — every database query uses it as a filter, so one school's data is never accessible to another school, even if someone tried to guess an ID
 
 # ❓ How do you ensure data security?
 
 - JWT authentication
 - Role-based access control
-- tenantId filtering for isolation
+- schoolId filtering for isolation
 - Input validation
 - Secure webhook verification 
 
@@ -177,9 +174,9 @@ We also implement refresh tokens and HTTPS to prevent interception.
 
 In our system, each school is treated as a separate tenant.
 
-We used a shared database approach with tenantId in every collection.
+We used a shared database approach with schoolId in every collection.
 
-Every API request includes tenantId from JWT, and all queries are filtered using it, ensuring strict data isolation.
+Every API request includes schoolId from JWT, and all queries are filtered using it, ensuring strict data isolation.
 
 This approach is scalable and avoids managing multiple databases.
 
@@ -190,6 +187,30 @@ We implemented RBAC using JWT and NestJS guards.
 The JWT contains the user's role, and we created a custom RolesGuard that checks if the user has permission to access a particular API.
 
 On the frontend, we also hide UI elements based on role to improve user experience.
+
+# ❓ How did you implement RBAC?  using express Js
+
+- We used JWT for authentication and custom middleware to check user roles before allowing access to routes.
+
+In Express.js, we implemented RBAC using JWT and custom middleware.
+
+After login, we generate a JWT that includes userId, role, and tenantId.
+
+For protected routes, we created two middleware functions:
+
+1. Authentication middleware:
+   - Verifies the JWT token
+   - Extracts user details (userId, role, tenantId)
+   - Attaches them to the request object
+
+2. Authorization middleware (RBAC):
+   - Checks if the user’s role is allowed to access the route
+   - For example, only admin can access fee management APIs
+
+We use this middleware in routes like:
+app.get('/fees', authMiddleware, roleMiddleware(['admin']), controller)
+
+This ensures only authorized users can access specific endpoints.
 
 
 <!-- 🔷 5. DATABASE (MongoDB + PostgreSQL) -->
@@ -220,7 +241,7 @@ We would use foreign keys to maintain relationships and ensure data integrity.
 
 # ❓ How did you optimize MongoDB?
 
-I used compound indexes on frequently queried fields like tenantId, classId, and date.
+I used compound indexes on frequently queried fields like schoolId, classId, and date.
 
 I also used projection to fetch only required fields and optimized aggregation pipelines.
 
@@ -235,7 +256,7 @@ This reduced query execution time by around 35%.
 
 # ❓ How did you improve performance?
 
-On the backend, I added compound indexes on the most frequent query fields — tenantId, classId, date for attendance queries — which reduced MongoDB query execution time by 35%. I also used projection to fetch only required fields instead of pulling full documents.
+On the backend, I added compound indexes on the most frequent query fields — schoolId, classId, date for attendance queries — which reduced MongoDB query execution time by 35%. I also used projection to fetch only required fields instead of pulling full documents.
 On the frontend, I implemented lazy loading and code splitting, which improved page load speed by 20%. I also built 15+ reusable components that reduced code duplication by 25%.
 
 # ❓ How do you handle large data (3000 users)?
