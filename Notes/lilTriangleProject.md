@@ -283,6 +283,7 @@ After payment, Razorpay sends a webhook to backend.
 
 We verify the webhook signature using HMAC SHA256 before updating payment status to ensure security.
 
+HMAC SHA-256 stands for Hash-based Message Authentication Code using the SHA-256 hash function. It is a type of keyed hash algorithm used to verify both the data integrity and the authenticity of a message simultaneously, combining a secret key with the SHA-256 cryptographic hash function.
 
 <!-- 🔷 8. CLOUD & DEVOPS -->
 
